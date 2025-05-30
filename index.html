@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Robótica - SinodalPrado</title>
+<link rel="icon" type="image/png" href="robo.jpg.png">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Terminus', sans-serif;
+    background: #f0f4f8; /* light neutral background */
+    color: #2f2f2f; /* dark gray text */
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    position: relative;
+    min-height: 100vh;
+  }
+  a {
+    cursor: pointer;
+  }
+  header {
+    position: relative;
+    background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80') center/cover no-repeat;
+    height: 85vh;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 1rem;
+  }
+  header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 40, 20, 0.6); /* subtle dark overlay */
+    z-index: 0;
+  }
+  header .content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    padding: 0 1rem;
+  }
+  /* Dropdown menu container */
+  .dropdown {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    display: inline-block;
+    z-index: 9999;
+  }
+  /* Dropdown button styling */
+  .dropbtn {
+    background: rgba(46, 62, 37, 0.9);
+    color: #f0f4f8;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.4rem 1.2rem;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    box-shadow: 0 4px 12px rgba(46, 62, 37, 0.7);
+    transition: background 0.3s ease;
+  }
+  .dropbtn:hover,
+  .dropbtn:focus {
+    background: #7a927a;
+    color: #1a1a1a;
+    outline: none;
+  }
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background-color: #f8faf8;
+    min-width: 180px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 10000;
+  }
+  /* Links inside dropdown */
+  .dropdown-content a {
+    color: #2f2f2f;
+    padding: 10px 14px;
+    text-decoration: none;
+    display: block;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .dropdown-content a:hover,
+  .dropdown-content a:focus {
+    background-color: #7a927a;
+    color: #f0f4f8;
+    outline: none;
+  }
+  /* Show the dropdown on button active or container focus */
+  .show {
+    display: block;
+  }
+  /* Logo styling */
+  header .logo {
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+  }
+  header .logo img {
+    width: 250px;
+    height: auto;
+    filter: none;
+  }
+  header h1 {
+    font-size: 3.8rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 3px;
+    text-shadow: 0 0 6px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+  header svg.robot-icon {
+    width: 40px;
+    height: 40px;
+    fill: #7a927a;
+  }
+  header p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-top: 0.4rem;
+    text-shadow: 0 0 5px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 2;
+  }
+  main {
+    max-width: 1000px;
+    margin: 2.5rem auto 5rem;
+    padding: 0 1rem;
+  }
+  section {
+    margin-bottom: 3.5rem;
+  }
+  section h2 {
+    color: #496848; /* muted green */
+    font-weight: 700;
+    border-left: 6px solid #7a927a;
+    padding-left: 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 2.2rem;
+  }
+  section p,
+  section ul {
+    font-weight: 300;
+    font-size: 1.15rem;
+    color: #4a4a4a;
+  }
+  ul {
+    padding-left: 1.5rem;
+  }
+  li {
+    margin-bottom: 0.8rem;
+  }
+  /* Card style for projects & courses */
+  .card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+    gap: 1.8rem;
+  }
+  .card {
+    background: #f8faf8; /* very light greenish neutral */
+    padding: 1.6rem 1.4rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover,
+  .card:focus-within {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  }
+  .card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: #345234; /* moderate green */
+  }
+  .card p {
+    font-weight: 300;
+    color: #555;
+  }
+  /* Button */
+  .btn-primary {
+    background: #7a927a;
+    border: none;
+    padding: 0.85rem 2.2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #f0f4f8;
+    cursor: pointer;
+    border-radius: 35px;
+    box-shadow: 0 4px 12px rgba(122,146,122,0.6);
+    transition: background 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1rem;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background: #5e715e;
+    outline: none;
+  }
+  /* Back to top button */
+  .back-to-top {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    background: #7a927a;
+    color: #f0f4f8;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 35px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(122,146,122,0.8);
+    transition: background 0.3s ease;
+    z-index: 10000;
+  }
+  .back-to-top:hover,
+  .back-to-top:focus {
+    background: #5e715e;
+    outline: none;
+  }
+  /* Footer */
+  footer {
+    background: #2e3e25;
+    color: #dadfdb;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    font-weight: 300;
+    font-size: 0.9rem;
+    box-shadow: inset 0 3px 7px rgba(26,34,15,0.8);
+  }
+  /* Gallery specific */
+  #galeria .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 1.5rem;
+  }
+  #galeria .gallery-grid img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    object-fit: cover;
+    height: 150px;
+  }
+  #galeria .gallery-grid img:hover,
+  #galeria .gallery-grid img:focus {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    outline: none;
+  }
+  /* Feedback form */
+  #pesquisas form {
+    background: #f8faf8;
+    padding: 1.5rem 1.2rem;
+    border-radius: 12px;
+    max-width: 480px;
+    margin-top: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  #pesquisas label {
+    display: block;
+    color: #345234;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  #pesquisas textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 90px;
+    border-radius: 8px;
+    border: 1px solid #7a927a;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    color: #2f2f2f;
+  }
+  #pesquisas button.submit-btn {
+    margin-top: 1rem;
+    width: 100%;
+  }
+  /* Responsive */
+  @media (max-width: 600px) {
+    header h1 {
+      font-size: 2.8rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+    section h2 {
+      font-size: 1.7rem;
+    }
+    #galeria .gallery-grid img {
+      height: 120px;
+    }
+    header .logo img {
+      width: 180px;
+    }
+    .dropbtn {
+      font-size: 0.9rem;
+      padding: 0.3rem 1rem;
+    }
+    .dropdown-content {
+      min-width: 140px;
+    }
+  }
+</style>
+<script>
+  // Toggle dropdown menu visibility
+  function toggleDropdown() {
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    dropdownMenu.classList.toggle("show");
+
+    // Toggle aria-expanded on the button
+    const toggleBtn = document.getElementById("dropdownToggle");
+    const expanded = toggleBtn.getAttribute("aria-expanded") === "true";
+    toggleBtn.setAttribute("aria-expanded", String(!expanded));
+  }
+
+  // Close dropdown if click outside
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      for (var i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+          // reset aria-expanded
+          document.getElementById("dropdownToggle").setAttribute("aria-expanded", "false");
+        }
+      }
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const galleryImages = document.querySelectorAll('#galeria .gallery-grid img');
+    galleryImages.forEach(img => {
+      img.addEventListener('click', () => {
+        window.open(img.src, '_blank');
+      });
+      img.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.open(e.target.src, '_blank');
+        }
+      });
+    });
+
+    // Simple feedback form handler preventing real submission for demo
+    const feedbackForm = document.getElementById('feedbackForm');
+    if (feedbackForm) {
+      feedbackForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Obrigado pelo seu feedback!');
+        feedbackForm.reset();
+      });
+    }
+
+    // Back to top button functionality
+    const backToTopBtn = document.getElementById('backToTop');
+    backToTopBtn.addEventListener('click', () => {
+      window.scroll({top: 0, left: 0, behavior: 'smooth'});
+    });
+  });
+</script>
+</head>
+<body>
+<header>
+  <div class="content" aria-label="Cabeçalho do site SinodalPrado Robótica">
+    <div class="logo" aria-label="Logotipo SinodalPrado">
+      <img src="sinodallogo.jpg.png" alt="Logotipo SinodalPrado" />
+      <!-- Replace above src with your official logo image URL -->
+    </div>
+    <h1>
+      <svg xmlns="http://www.w3.org/2000/svg" class="robot-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <path d="M32 19a13 13 0 1 0 0 26 13 13 0 0 0 0-26zm0 22a9 9 0 1 1 0-18 9 9 0 0 1 0 18z" />
+        <path d="M59.69 32.91v-2l-5.8-1.4a23.6 23.6 0 0 0-1.22-3.3l3.76-4.8-1.43-1.43-4.8 3.77a23.67 23.67 0 0 0-3.3-1.22l-1.4-5.8h-2l-1.4 5.8a23.67 23.67 0 0 0-3.3 1.22l-4.8-3.77-1.43 1.43 3.76 4.8a23.6 23.6 0 0 0-1.22 3.3l-5.8 1.4v2l5.8 1.4a23.6 23.6 0 0 0 1.22 3.3l-3.76 4.8 1.43 1.43 4.8-3.77a23.67 23.67 0 0 0 3.3 1.22l1.4 5.8h2l1.4-5.8a23.67 23.67 0 0 0 3.3-1.22l4.8 3.77 1.43-1.43-3.76-4.8a23.6 23.6 0 0 0 1.22-3.3zM32 43a11 11 0 1 1 0-22 11 11 0 0 1 0 22z"/>
+      </svg>
+      Robótica SinodalPrado
+    </h1>
+    <p>Preparando Futuros Líderes em Tecnologia e Inovação</p>
+  </div>
+  <div class="dropdown" role="navigation" aria-label="Menu principal">
+    <button onclick="toggleDropdown()" class="dropbtn" aria-haspopup="true" aria-expanded="false" id="dropdownToggle" aria-controls="dropdownMenu" aria-label="Abrir menu de navegação">
+      &#x22EE; Menu
+    </button>
+    <div id="dropdownMenu" class="dropdown-content" role="menu" aria-labelledby="dropdownToggle" tabindex="-1">
+      <a href="#sobre" role="menuitem" tabindex="0">Sobre</a>
+      <a href="#projetos" role="menuitem" tabindex="0">Projetos</a>
+      <a href="#cursos" role="menuitem" tabindex="0">Cursos</a>
+      <a href="#galeria" role="menuitem" tabindex="0">Galeria</a>
+      <a href="#pesquisas" role="menuitem" tabindex="0">Pesquisas de Satisfação</a>
+      <a href="#contato" role="menuitem" tabindex="0">Contato</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="sobre" tabindex="0">
+    <h2>Sobre a Robótica SinodalPrado</h2>
+    <p>
+      O Programa de Robótica do SinodalPrado é dedicado a despertar a criatividade e o conhecimento técnico entre estudantes, promovendo o aprendizado prático em automação, programação e inovação tecnológica com robôs.
+    </p>
+    <p>
+      Aqui, os alunos têm a oportunidade de explorar diferentes áreas da robótica, participando de workshops, competições e projetos que estimulam o pensamento crítico, colaboração e solução de desafios reais.
+    </p>
+  </section>
+
+  <section id="projetos" tabindex="0">
+    <h2>Projetos em Destaque</h2>
+    <div class="card-list">
+      <article class="card" tabindex="0" aria-label="Projeto Robô Seguidor de Linha">
+        <h3>Robô Seguidor de Linha</h3>
+        <p>Veículo autônomo que usa sensores para detectar e seguir trilhas demarcadas, desenvolvendo habilidades em eletrônica e programação embarcada.</p>
+      </article>
+      <article class="card" tabindex="0" aria-label="Projeto Braço Robótico">
+        <h3>Braço Robótico Controlado</h3>
+        <p>Mecanismo que simula movimentos humanos para realizar tarefas de precisão, com controle via interface programada.</p>
+      </article>
+      <article class="card" tabindex="0" aria-label="Projeto Impressão 3D para Robótica">
+        <h3>Impressão 3D para Prototipagem</h3>
+        <p>Utilização de modelagem 3D e impressão para criar peças customizadas que integram projetos robóticos exclusivos.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="cursos" tabindex="0">
+    <h2>Cursos e Oficinas</h2>
+    <div class="card-list">
+      <article class="card" tabindex="0" aria-label="Curso Programação com Arduino">
+        <h3>Programação com Arduino</h3>
+        <p>Introdução à plataforma Arduino com foco em programação em C++ e controle de sensores e atuadores.</p>
+      </article>
+      <article class="card" tabindex="0" aria-label="Curso Python para Robótica">
+        <h3>Python para Robótica</h3>
+        <p>Uso da linguagem Python para automação, controle e desenvolvimento de sistemas embarcados com Raspberry Pi e ESP32.</p>
+      </article>
+      <article class="card" tabindex="0" aria-label="Oficina de Robótica Educacional">
+        <h3>Oficina de Robótica Educacional</h3>
+        <p>Workshops práticos para introdução à robótica para todas as idades, estimulando o aprendizado por meio da experimentação.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="galeria" tabindex="0">
+    <h2>Galeria de Fotos</h2>
+    <div class="gallery-grid" aria-label="Galeria de imagens de projetos e eventos">
+      <img src="robotica.jpg" alt="Aluno trabalhando em robótica" tabindex="0" />
+      <img src="sala.jpg" alt="Robô em prototipagem" tabindex="0" />
+      <img src="guerra.jpg" alt="Equipe em competição de robótica" tabindex="0" />
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Oficina prática de robótica" tabindex="0" />
+      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Robô em demonstração" tabindex="0" />
+      <img src="https://images.unsplash.com/photo-1529602824890-48b852ff9a7a?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" alt="Montagem eletrônica" tabindex="0" />
+    </div>
+  </section>
+
+  <section id="pesquisas" tabindex="0">
+    <h2>Pesquisas de Satisfação</h2>
+    <p>
+      Sua opinião é muito importante para nós! Ajude a melhorar nossos projetos e cursos participando da nossa pesquisa de satisfação.
+    </p>
+    <form id="feedbackForm" aria-label="Formulário de pesquisa de satisfação">
+      <label for="feedbackText">Deixe seu comentário ou sugestão:</label>
+      <textarea id="feedbackText" name="feedbackText" placeholder="Escreva aqui seu feedback..." required aria-required="true" aria-describedby="feedbackHelp"></textarea>
+      <span id="feedbackHelp" style="font-size: 0.9rem; color:#496848;">Máximo 500 caracteres.</span>
+      <button type="submit" class="btn-primary submit-btn" aria-label="Enviar feedback">Enviar Feedback</button>
+    </form>
+  </section>
+
+  <section id="contato" tabindex="0">
+    <h2>Contato</h2>
+    <p>
+      Quer fazer parte do Programa de Robótica ou saber mais? Entre em contato conosco!
+    </p>
+    <ul>
+      <li>Email: <a href="mailto:robotica@sinodalprado.edu.br" style="color:#496848;">robotica@sinodalprado.edu.br</a></li>
+      <li>Telefone: (51) 99999-9999</li>
+      <li>Av. Central, 1234 - Prado, RS</li>
+    </ul>
+    <a href="mailto:robotica@sinodalprado.edu.br" class="btn-primary">Enviar Email</a>
+  </section>
+</main>
+
+<footer role="contentinfo">
+  &copy; 2024 SinodalPrado - Todos os direitos reservados
+</footer>
+
+<button id="backToTop" class="back-to-top" aria-label="Voltar ao início do site" title="Voltar ao início">
+  ↑ Início
+</button>
+</body>
+</html>
