@@ -1,0 +1,248 @@
+/* Reset básico */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo básico para o menu */
+nav {
+    background-color: #6184e6bb; 
+    box-shadow: black;
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block; /* Melhor para controle do espaço */
+    margin: 0 25px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: white; /* Azul para destaque */
+}
+
+/* Imagem de fundo da capa */
+#imagem_fundo {
+    background: url('img/fundo.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    display: flex; /* Melhor que text-align para centralizar vertical e horizontalmente */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white; /* Texto sobre fundo fica mais visível */
+}
+
+
+/* Título principal */
+#titulo1 {
+    color: white;
+    padding-top: 10%;
+    font-size: 70px;
+    line-height: 1;
+}
+
+/* Subtítulo */
+#subtitulo1 {
+    color: white;
+    padding: 0 20%;
+}
+
+/* Link da ação */
+#acao1 {
+    color: white;
+    border: 2px solid #6184e6bb;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+/* Seções com fundo em destaque */
+.destaque {
+    background-color: #6184e6bb;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.destaque2 {
+    background-color: #6184e6bb;
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* Ícones */
+.icone {
+    width: 71px;
+    margin-bottom: 10px;
+}
+
+/* Imagens das seções ecopontos */
+.imgeco {
+    width: 90%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Layout das colunas */
+.coluna {
+    float: left;
+    padding: 3% 5%;
+    position: relative;
+}
+
+.dois {
+    width: 40%;
+}
+
+.tres {
+    width: 29%;
+    padding: 0 2%;
+}
+
+.quatro {
+    width: 15%;
+}
+
+/* Textos alinhados */
+.centralizado {
+    text-align: center;
+}
+
+.justificado {
+    text-align: justify;
+}
+
+/* Seção genérica */
+section {
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* Caixa de destaque */
+#caixa {
+    width: 60%;
+    height: 50%;
+    border: 3px solid tomato;
+    text-align: center;
+    line-height: 89.5px;
+    text-transform: uppercase;
+    font-size: 60px;
+    letter-spacing: 20px;
+    text-decoration: none;
+    margin: 20px auto;
+}
+
+/* Substituindo duplicatas e erros */
+#imagem_fundo {
+    background: url('fundo.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    text-align: center;
+}
+
+#titulo {
+    color: white;
+    padding-top: 10%;
+    font-size: 70px;
+    line-height: 1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+#subtitulo {
+    color: white;
+    padding: 0 20%;
+}
+
+/* Botão de ação genérico */
+#acao {
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(44, 128, 236);
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px; /* espaçamento mais moderado */
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+#video .coluna.dois {
+  box-sizing: border-box;
+}
+
+/* Coluna do vídeo ocupa metade da largura da seção */
+#video .coluna.dois:first-child {
+  flex: 0 0 50%;
+}
+
+#video .coluna.dois:first-child iframe {
+  width: 100%;    /* vídeo ocupa 100% da coluna */
+  height: 383px;  /* altura fixa igual ao seu exemplo */
+  border-radius: 8px; /* cantos arredondados (opcional) */
+  border: none;
+}
+
+/* Coluna do texto ocupa a outra metade com borda */
+#video .coluna.dois:last-child {
+  flex: 0 0 50%;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center; /* centraliza título e parágrafos */
+}
+
+#video .coluna.dois:last-child h3 {
+  margin-bottom: 15px;
+}
+
+#video .coluna.dois:last-child p {
+  text-align: justify; /* mantém justificado para parágrafos */
+  margin-bottom: 10px;
+}
+
+
+/* Para a seção dicas */
+#dicas {
+  text-align: center;  /* centraliza o título */
+}
+
+#dicas .coluna.quatro {
+  display: inline-block;  /* deixa os cards lado a lado */
+  vertical-align: top;
+  width: 22%;             /* 4 colunas com espaçamento */
+  margin: 1%;             /* margem para espaçamento entre cards */
+  box-sizing: border-box;
+  text-align: center;     /* centraliza o conteúdo dentro dos cards */
+}
+
+#dicas .coluna.quatro img.icone {
+  max-width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
