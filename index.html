@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vittality</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+    :root {
+      --primary-color: #005f73;
+      --secondary-color: #0a9396;
+      --accent-color: #94d2bd;
+      --bg-color: #e9f1f7;
+      --text-color-dark: #001219;
+      --text-color-light: #ffffff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.12);
+      --shadow-hover: 0 8px 30px rgba(0,0,0,0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Apply the background image to entire body */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      /* Background image applied site-wide */
+      background: url('fundo.jpg') center center/cover no-repeat fixed;
+      scroll-behavior: smooth;
+    }
+
+    /* Overlay for readability */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 47, 63, 0.75);
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: var(--accent-color);
+    }
+
+    /* Cabeçalho */
+    header {
+      background-image:url('logo.jpg');
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(0,95,115, 0.85);
+      backdrop-filter: saturate(180%) blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 2rem;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+      color: var(--text-color-light);
+    }
+
+    header .logo {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--accent-color);
+      letter-spacing: 2px;
+      user-select: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.8rem;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.4rem 0.2rem;
+      position: relative;
+      color: var(--text-color-light);
+    }
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0%;
+      height: 2px;
+      background: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+    }
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      color: var(--text-color-dark);
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+    }
+    .social-icons a:hover {
+      background: var(--secondary-color);
+      color: white;
+    }
+    /* SVG icons size reset */
+    .social-icons svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    /* Hero section */
+    .hero {
+      margin-top: 64px; /* header height */
+      height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      color: var(--text-color-light);
+      text-align: center;
+      /* background image removed here as it's on body */
+      box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.25);
+    }
+    .hero-content {
+      position: relative;
+      max-width: 700px;
+      padding: 0 1rem;
+      z-index: 1;
+    }
+    .hero-content h1 {
+      font-size: 3.2rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 2px;
+      line-height: 1.2;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.7);
+    }
+    .cta-button {
+      background: var(--accent-color);
+      color: var(--text-color-dark);
+      font-weight: 700;
+      padding: 1rem 3rem;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      display: inline-block;
+      user-select: none;
+      border: none;
+    }
+    .cta-button:hover {
+      background: #94e4c1;
+      transform: scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Section: Search */
+    .search-bar {
+      max-width: 900px;
+      margin: 3rem auto 2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      padding: 0 1rem;
+      flex-wrap: wrap;
+      color: var(--text-color-light);
+    }
+    .search-bar input[type="search"] {
+      flex: 1 1 320px;
+      padding: 0.75rem 1rem;
+      border-radius: 50px;
+      border: 2px solid var(--secondary-color);
+      font-size: 1rem;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+      background: rgba(255 255 255 / 0.95);
+      color: #111;
+    }
+    .search-bar input[type="search"]::placeholder {
+      color: #555;
+    }
+    .search-bar input[type="search"]:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 8px var(--accent-color);
+      background: #fff;
+    }
+    .search-bar select {
+      flex: 0 0 180px;
+      padding: 0.75rem 1rem;
+      border-radius: 50px;
+      border: 2px solid var(--secondary-color);
+      font-size: 1rem;
+      outline-offset: 2px;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+      background: rgba(255 255 255 / 0.95);
+      color: #111;
+    }
+    .search-bar select:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 8px var(--accent-color);
+      background: #fff;
+    }
+
+    /* Species cards */
+    .species-cards {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+      gap: 2rem;
+      padding: 0 1rem;
+      color: var(--text-color-dark);
+    }
+    .card {
+      background: rgba(255 255 255 / 0.95);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      will-change: transform;
+      color: var(--text-color-dark);
+    }
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: var(--shadow-hover);
+      z-index: 5;
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 1px solid #ddd;
+      user-select: none;
+      pointer-events: none;
+      border-radius: 18px 18px 0 0;
+    }
+    .card-content {
+      padding: 1rem 1.25rem;
+      flex-grow: 1;
+    }
+    .card h2 {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin: 0 0 0.3rem 0;
+      color: var(--primary-color);
+    }
+    .card h3 {
+      font-weight: 500;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--secondary-color);
+      margin: 0 0 0.7rem 0;
+    }
+    .card p {
+      font-weight: 300;
+      font-size: 0.9rem;
+      color: #444;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+      user-select: text;
+    }
+
+    /* Modal Styles */
+    #modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+    #modal.active {
+      display: flex;
+      animation: zoomIn 0.4s ease forwards;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      max-width: 700px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+      box-shadow: var(--shadow-hover);
+      color: #111;
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--primary-color);
+      border: none;
+      color: white;
+      font-size: 1.3rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    .modal-close:hover {
+      background: var(--secondary-color);
+    }
+    .modal-image {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+    .modal-description {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+      font-weight: 400;
+    }
+    .modal-curiosities {
+      background: var(--accent-color);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-style: italic;
+      color: var(--text-color-dark);
+      font-weight: 600;
+    }
+
+    @keyframes zoomIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Scroll animations with AOS */
+    [data-aos] {
+      opacity: 0;
+      transition-property: opacity, transform;
+      transition-duration: 0.7s;
+      transition-timing-function: ease-out;
+      will-change: opacity, transform;
+    }
+    [data-aos].aos-animate {
+      opacity: 1;
+      transform: translate(0,0);
+    }
+    [data-aos="fade-up"] {
+      transform: translateY(20px);
+    }
+    [data-aos="fade-left"] {
+      transform: translateX(20px);
+    }
+
+    /* Seções adicionais */
+    section#ecosystems,
+    section#conservation,
+    section#curiosities,
+    section#contact {
+      max-width: 900px;
+      margin: 3rem auto 2rem;
+      background: rgba(255 255 255 / 0.9);
+      border-radius: 15px;
+      padding: 1.5rem 2rem;
+      color: var(--text-color-dark);
+      box-shadow: var(--shadow);
+    }
+    section h2 {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+    section p {
+      font-weight: 400;
+      line-height: 1.5;
+      font-size: 1rem;
+    }
+
+    /* Rodapé */
+    footer {
+      background: var(--primary-color);
+      color: var(--text-color-light);
+      padding: 2rem 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    footer .footer-links {
+      margin-bottom: 1rem;
+    }
+    footer .footer-links a {
+      margin: 0 1rem;
+      font-weight: 600;
+      color: var(--accent-color);
+    }
+    footer .footer-links a:hover {
+      color: var(--text-color-light);
+    }
+  </style>
+</head>
+<body>
+<iframe width="1351" height="480" src="https://www.youtube.com/embed/U1fu_sA7XhE" title="Jaws Official Trailer #1 - Richard Dreyfuss, Steven Spielberg Movie (1975) HD" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> 
+  <!-- Cabeçalho -->
+  <header>
+    <div class="logo">
+      <img src="" alt="">Vittality</div>
+    <nav aria-label="Menu principal">
+      <ul>
+        <li><a href="#species">Bem-Vindos(as)</a></li>
+      </ul>
+    </nav>
+    <div class="social-icons" aria-label="Redes sociais">
+      <a href="#" title="Facebook" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </a>
+      <a href="#" title="Instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37a4 4 0 1 1-4.73-4.73 4 4 0 0 1 4.73 4.73z"/>
+          <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+        </svg>
+      </a>
+      <a href="#" title="Twitter" aria-label="Twitter">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Seção de Destaque -->
+  <section class="hero" role="img" aria-label="Imagem de fundo do oceano com vida marinha">
+    <div class="hero-content">
+      <h1>Explore a beleza e diversidade da vida marinha</h1>
+      <button class="cta-button" onclick="document.getElementById('species').scrollIntoView({behavior:'smooth'});">Descubra as espécies</button>
+    </div>
+  </section>
+
+
+
+  <!-- Cards de Espécies Marinhas -->
+  <section id="species" class="species-cards" aria-label="Cards de espécies marinhas">
+    <article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc1">
+      <img src="tubaraobranco.jpg" alt="Tubarão Branco" loading="lazy" />
+      <div class="card-content">
+        <h2>Tubarão Branco</h2>
+        <h3>Carcharodon carcharias</h3>
+        <p id="desc1">é um dos maiores predadores marinhos, alcançando até 6 metros de comprimento. Sua coloração cinza no dorso e branca no ventre oferece camuflagem eficiente. Possui sentidos altamente desenvolvidos, como o olfato e a detecção de campos elétricos, que o tornam um caçador formidável. Desempenha papel crucial no equilíbrio dos ecossistemas oceânicos, controlando populações de presas.</p>
+      </div>
+    </article>
+     <article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc1">
+      <img src="tubaraotigre.jpg" alt="Tubarão Tigre" loading="lazy" />
+      <div class="card-content">
+        <h2>Tubarão Tigre</h2>
+        <h3>Galeocerdo cuvier</h3>
+        <p id="desc1">é um dos maiores predadores marinhos, podendo atingir até 5 metros de comprimento. Reconhecido pelas listras verticais em seu corpo, que lembram as de um tigre, desempenha um papel importante na manutenção do equilíbrio ecológico, ao controlar populações de diversas espécies. É um predador oportunista, com dieta bastante variada.</p>
+      </div>
+      </article>
+      <article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc1">
+  <img src="tubaraobaleia.jpg" alt="Tubarão Baleia" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Baleia</h2>
+    <h3>Rhincodon typus</h3>
+    <p id="desc1">é o maior peixe do mundo, podendo atingir mais de 12 metros de comprimento. Apesar do tamanho imenso, é um filtrador pacífico que se alimenta principalmente de plâncton, pequenos peixes e ovos. Habita águas tropicais e quentes, desempenhando papel importante na saúde dos ecossistemas marinhos ao controlar populações de organismos menores.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc2">
+  <img src="tubaraomartelo.jpg" alt="Tubarão Martelo" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Martelo</h2>
+    <h3>Sphyrnidae</h3>
+    <p id="desc2">é facilmente reconhecido por sua cabeça em forma de “T” ou martelo, que lhe confere excelente visão panorâmica e maior sensibilidade para detectar presas. Pode atingir até 6 metros de comprimento e habita principalmente águas tropicais e temperadas. Atua como predador importante no controle das populações de peixes e outras espécies marinhas.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="costeiro" tabindex="0" aria-describedby="desc3">
+  <img src="tubaraogralhapreta.jpg" alt="Tubarão Galha preta" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Galha preta</h2>
+    <h3>Carcharhinus melanopterus</h3>
+    <p id="desc3">é uma espécie de tubarão costeiro de tamanho médio, com cerca de 1,5 metros de comprimento. É facilmente reconhecido por suas barbatanas com pontas pretas distintas, que lhe deram o nome. Habita águas rasas tropicais e recifes de coral no Indo-Pacífico. É um predador ágil, que se alimenta principalmente de peixes, polvos e crustáceos.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-profundo" tabindex="0" aria-describedby="desc4">
+  <img src="tubaraogroelandia.jpg" alt="Tubarão da Grôelandia" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão da Grôelandia</h2>
+    <h3>Somniosus microcephalus</h3>
+    <p id="desc4">é uma das espécies de tubarão que vivem em águas frias e profundas do Atlântico Norte e Ártico. Pode atingir até 7 metros de comprimento e tem um crescimento extremamente lento, vivendo possivelmente mais de 400 anos, o que o torna um dos vertebrados com maior longevidade do planeta. Alimenta-se principalmente de peixes e carcaças que encontra no fundo do mar.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="recife" tabindex="0" aria-describedby="desc5">
+  <img src="tubaraoleopardo.jpg" alt="Tubarão Leopardo" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Leopardo</h2>
+    <h3>Triakis semifasciata</h3>
+    <p id="desc5">é uma espécie de tubarão de tamanho médio, com cerca de 1,5 a 2 metros de comprimento, encontrado principalmente nas águas costeiras do Pacífico Leste, especialmente ao longo da costa da Califórnia. Seu nome vem das manchas escuras espalhadas pelo corpo que lembram a pele do leopardo. É um predador bentônico que se alimenta de peixes, moluscos e crustáceos.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc6">
+  <img src="tubaraomako.jpg" alt="Tubarão Mako" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Mako</h2>
+    <h3>Isurus oxyrinchus</h3>
+    <p id="desc6">é um dos tubarões mais rápidos do oceano, capaz de atingir velocidades superiores a 70 km/h. Pode medir até 4 metros de comprimento e é conhecido por sua forma hidrodinâmica e musculatura poderosa. Habita águas temperadas e tropicais, sendo um predador ágil que se alimenta principalmente de peixes pelágicos, como atuns e espadartes.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="costeiro" tabindex="0" aria-describedby="desc7">
+  <img src="tubaraolixa.jpg" alt="Tubarão-lixa" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão lixa</h2>
+    <h3>Mustelus mustelus</h3>
+    <p id="desc7">Dtambém conhecido como tubarão-martelo-lixa, é uma espécie de tubarão costeiro de tamanho médio, geralmente medindo até 1,5 metros. Habita águas rasas e costeiras do Atlântico Nordeste e Mediterrâneo. Alimenta-se principalmente de crustáceos, moluscos e pequenos peixes, usando seus dentes pequenos e serrilhados para esmagar suas presas.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc8">
+  <img src="tubaraocabeca.jpg" alt="Tubarão Cabeça Chata" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Cabeça Chata</h2>
+    <h3>Carcharhinus leucas</h3>
+    <p id="desc8">é uma espécie robusta que pode atingir até 3,5 metros de comprimento. É famoso por sua capacidade de viver tanto em água salgada quanto doce, sendo encontrado em estuários, rios e lagos, além de áreas costeiras. É um predador oportunista, alimentando-se de peixes, tartarugas, aves e até outros tubarões.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="recife" tabindex="0" aria-describedby="desc9">
+  <img src="pontabranca.jpg" alt="Tubarão de Ponta Branca" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão de Ponta Branca</h2>
+    <h3>Triaenodon obesus</h3>
+    <p id="desc9">é uma espécie de tubarão de recife facilmente reconhecível pelas pontas brancas em suas nadadeiras dorsal e caudal. Mede, em média, entre 1,5 e 2 metros de comprimento e habita recifes de coral nas regiões tropicais do Indo-Pacífico. É um predador noturno, alimentando-se de peixes, crustáceos e moluscos que caça nas fendas e cavernas dos recifes.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="estuário" tabindex="0" aria-describedby="desc10">
+  <img src="lanterna.jpg" alt="Tubarão Lanterna" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Lanterna</h2>
+    <h3>Etmopterus spp</h3>
+    <p id="desc10">é um pequeno tubarão de águas profundas, caracterizado pela presença de fotóforos — órgãos especializados que emitem luz — distribuídos pelo corpo. Essas espécies raramente ultrapassam os 50 cm de comprimento e habitam zonas mesopelágicas e batipelágicas de oceanos tropicais e temperados. Sua dieta inclui pequenos peixes, crustáceos e cefalópodes.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-profundo" tabindex="0" aria-describedby="desc11">
+  <img src="cinzento.jpg" alt="Tubarão-luz" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão cinzento</h2>
+    <h3>Carcharhinus amblyrhynchos</h3>
+    <p id="desc11">também conhecido como tubarão-cinzento-de-recife, é uma espécie típica de recifes de coral em águas tropicais do Indo-Pacífico. Pode atingir até 2,5 metros de comprimento e é reconhecido pela coloração cinza-escura no dorso e nadadeiras com bordas pretas. É um predador ativo, caçando principalmente peixes ósseos, cefalópodes e crustáceos.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc12">
+  <img src="cobra.jpg" alt="Tubarão Cobra" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Cobra</h2>
+    <h3>Chlamydoselachus anguineus</h3>
+    <p id="desc12">é uma espécie rara e primitiva de tubarão, considerado um “fóssil vivo” devido às suas características ancestrais pouco alteradas ao longo de milhões de anos. Pode atingir até 2 metros de comprimento e habita águas profundas entre 200 e 1.500 metros. Seu nome vem do corpo alongado e flexível, que lembra uma serpente, e da presença de franjas nas guelras. Alimenta-se de cefalópodes, peixes e outros tubarões.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc13">
+  <img src="peregrino.jpg" alt="Tubarão Peregrino" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Peregrino</h2>
+    <h3>Cetorhinus maximus</h3>
+    <p id="desc13">é o segundo maior peixe do mundo, atrás apenas do tubarão-baleia. Pode atingir até 12 metros de comprimento. Apesar do tamanho impressionante, é inofensivo aos humanos, alimentando-se por filtração de plâncton enquanto nada com a boca amplamente aberta. Habita águas temperadas e frias de todos os oceanos, realizando migrações sazonais.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="estuário" tabindex="0" aria-describedby="desc14">
+  <img src="limao.jpg" alt="Tubarão Limão" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Limão</h2>
+    <h3>Negaprion brevirostris</h3>
+    <p id="desc14">é uma espécie de tubarão costeiro, facilmente reconhecido pela coloração amarelada ou acastanhada, que lhe confere excelente camuflagem em fundos arenosos e rasos. Pode atingir até 3,5 metros de comprimento e habita principalmente regiões tropicais e subtropicais do Oceano Atlântico e Pacífico. É um predador oportunista, alimentando-se de peixes, moluscos e crustáceos.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-profundo" tabindex="0" aria-describedby="desc15">
+  <img src="duende.jpg" alt="Tubarão Duende" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Duende</h2>
+    <h3>Mitsukurina owstoni</h3>
+    <p id="desc15"> é uma espécie rara e enigmática de águas profundas, conhecido pelo seu focinho alongado e achatado, em forma de lâmina, e pela mandíbula altamente protrátil. Pode alcançar até 4 metros de comprimento e habita profundidades entre 100 e 1.200 metros, principalmente em regiões do Japão, Golfo do México e Atlântico. Sua coloração é rosada ou cinza-clara devido à pele translúcida e vasos sanguíneos próximos à superfície.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc16">
+  <img src="fantasma.jpg" alt="Tubarão Fantasma" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Fantasma</h2>
+    <h3>Hydrolagus spp</h3>
+    <p id="desc16">é um peixe cartilaginoso pertencente à ordem dos quimeras, frequentemente confundido com tubarões verdadeiros, mas que na verdade compõe um grupo distinto. Habita águas profundas e frias, geralmente entre 200 e 2.600 metros de profundidade. Possui corpo alongado, pele lisa e coloração pálida, com uma nadadeira dorsal em forma de lâmina que pode conter um espinho venenoso.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="recife" tabindex="0" aria-describedby="desc17">
+  <img src="tubaraocachorro.jpg" alt="Tubarão Cachorro" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Cachorro</h2>
+    <h3>Galeorhinus galeus</h3>
+    <p id="desc17">também conhecido como tubarão-azul, é uma espécie de tubarão de porte médio, que pode alcançar até 2 metros de comprimento. Habita águas costeiras temperadas do Atlântico Sul, Pacífico e Atlântico Norte. É um predador oportunista, alimentando-se de peixes, lulas e crustáceos. Possui corpo esguio e coloração cinza-azulada.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc18">
+  <img src="bambu.jpg" alt="Tubarão Bambu" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Bambu</h2>
+    <h3>Chiloscyllium punctatum</h3>
+    <p id="desc18"> é uma pequena espécie de tubarão bentônico encontrada em águas rasas e recifes do Indo-Pacífico. Geralmente mede até 1 metro de comprimento. Apresenta corpo alongado com manchas escuras características, o que lhe confere camuflagem eficiente entre os corais e rochas. Alimenta-se de pequenos peixes, crustáceos e moluscos.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-profundo" tabindex="0" aria-describedby="desc19">
+  <img src="tubaraozebra.jpg" alt="Tubarão Zebra" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Zebra</h2>
+    <h3>Stegostoma tigrinum</h3>
+    <p id="desc19">também chamado de tubarão-tigre, é uma espécie de tubarão bentônico encontrado em recifes tropicais do Indo-Pacífico. Pode atingir até 3,5 metros de comprimento. Na fase juvenil, apresenta listras claras e escuras semelhantes a um padrão de zebra, que se transformam em manchas na fase adulta, ajudando na camuflagem entre os corais. Alimenta-se principalmente de moluscos, crustáceos e pequenos peixes.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc20">
+  <img src="gato.jpg" alt="Tubarão de Areia" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Gato</h2>
+    <h3>Galeus spp</h3>
+    <p id="desc20">é um nome comum dado a várias espécies de pequenos tubarões pertencentes à família Scyliorhinidae, encontrados em águas profundas e temperadas ao redor do mundo. Esses tubarões têm corpo alongado e esguio, com padrões que lembram manchas ou listras, e geralmente atingem entre 50 cm e 1 metro de comprimento. Alimentam-se principalmente de pequenos peixes e invertebrados.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc20">
+  <img src="cervo.jpg" alt="Tubarão Cabeça de Cervo" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Cervo</h2>
+    <h3>Heterodontus francisci</h3>
+    <p id="desc20">é uma espécie de tubarão bentônico encontrada principalmente nas águas costeiras do Pacífico Norte, especialmente ao longo da costa da Califórnia e México. Mede cerca de 1,2 metros de comprimento. Caracteriza-se pela cabeça robusta com cristas ósseas sobre os olhos e dentes especializados para triturar crustáceos, moluscos e outros invertebrados.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc21">
+  <img src="carcara.jpg" alt="Tubarão Carcará" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Carcará</h2>
+    <h3>Carcharhinus plumbeus</h3>
+    <p id="desc21">é uma espécie de tubarão costeiro que pode atingir até 3 metros de comprimento. Habita águas rasas e estuarinas ao longo da costa oeste do Atlântico, desde os Estados Unidos até o Brasil. Possui coloração cinza-prateada com pontas das nadadeiras dorsal e peitorais levemente escuras.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc22">
+  <img src="bico.jpg" alt="Tubarão Bico Longo" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Bico Longo</h2>
+    <h3>Carcharhinus brevipinna</h3>
+    <p id="desc22"> é uma espécie de tubarão pelágico encontrada em mares tropicais e subtropicais de todo o mundo. Pode atingir até 4 metros de comprimento e é facilmente reconhecido pelas nadadeiras largas e arredondadas com pontas brancas bem marcantes.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc23">
+  <img src="seis.jpg" alt="Tubarão de Seis Brânquias" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão de Seis Brânquias</h2>
+    <h3>Hexanchus griseus</h3>
+    <p id="desc23">é uma das espécies mais antigas e primitivas de tubarão ainda existentes. Pode atingir até 5 metros de comprimento e habita águas profundas, geralmente entre 200 e 2.500 metros de profundidade, em todos os oceanos do mundo. Sua principal característica é a presença de seis fendas branquiais, enquanto a maioria dos tubarões possui apenas cinco.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc24">
+  <img src="sete.jpg" alt="Tubarão de Sete Guelras" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão de Sete Guelras</h2>
+    <h3>Heptranchias perlo</h3>
+    <p id="desc24">é uma espécie de tubarão primitivo que pode atingir até 3 metros de comprimento. É encontrado em águas temperadas e frias de plataformas continentais e baías, preferindo habitats costeiros e profundos. Sua característica mais marcante é possuir sete fendas branquiais — uma a mais que a maioria dos tubarões modernos.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc25">
+  <img src="tapete.jpg" alt="Tubarão Tapete" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Tapete</h2>
+    <h3>Wobbegongs</h3>
+    <p id="desc25">Existem cerca de 12 espécies, todas encontradas principalmente nas águas rasas e recifais do Indo-Pacífico, especialmente na Austrália e Indonésia. Wobbegongs possuem corpo achatado, padrões de cores complexos e apêndices dérmicos ao redor da boca que ajudam na camuflagem e na atração de presas.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc26">
+  <img src="porco.jpg" alt="Tubarão Porco" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Porco</h2>
+    <h3>Oxynotus centrina</h3>
+    <p id="desc26">é uma espécie de tubarão de águas profundas pertencente à família Oxynotidae. Habita o Oceano Atlântico oriental e o Mar Mediterrâneo, geralmente entre 100 e 700 metros de profundidade. Apresenta corpo robusto e compacto, com uma pele extremamente áspera e espessa, além de uma aparência característica com focinho curto e obtuso.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc27">
+  <img src="dorminhoco.jpg" alt="Tubarão Dorminhoco" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Dorminhoco</h2>
+    <h3>Somniosus microcephalus</h3>
+    <p id="desc27">é o nome popular dado a várias espécies da ordem Squaliformes e da família Somniosidae, como o famoso tubarão-da-Groelândia. O termo “dorminhoco” refere-se ao comportamento dessas espécies, que apresentam movimentos extremamente lentos e um metabolismo reduzido, características adaptadas à vida em águas frias e profundas.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc28">
+  <img src="raposa.jpg" alt="Tubarão Raposa" loading="lazy" />
+  <div class="card-content">
+    <h2>Tubarão Raposa</h2>
+    <h3>Alopias spp</h3>
+    <p id="desc28">é um gênero de tubarões conhecido por sua cauda extremamente longa, que pode representar até metade do comprimento total do corpo. Existem três espécies principais: o tubarão-raposa-comum (Alopias vulpinus), o tubarão-raposa-pelágico (Alopias pelagicus) e o tubarão-raposa-de-olhos-grandes (Alopias superciliosus). Podem atingir até 6 metros de comprimento e habitam águas temperadas e tropicais ao redor do mundo.</p>
+  </div>
+</article>
+
+<article class="card" data-habitat="oceano-aberto" tabindex="0" aria-describedby="desc29">
+  <img src="megalodon.jpg" alt="Megalodon" loading="lazy" />
+  <div class="card-content">
+    <h2>Megalodon</h2>
+    <h3>Otodus megalodon</h3>
+    <p id="desc29">foi um dos maiores e mais poderosos tubarões que já existiram, vivendo entre cerca de 23 a 3,6 milhões de anos atrás, durante o período Mioceno e Plioceno. Estima-se que podia atingir até 18 metros de comprimento, muito maior que o maior tubarão moderno, o tubarão-branco.</p>
+  </div>
+</article>
+<footer><div style="text-align: center; max-width: 200px;">
+  <img src="thiago.jpg" alt="Thiago Martins Santos" 
+       style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #f7fcff00;" />
+  <p style="margin-top: 0.5rem; font-weight: bold; color: #ffffff;">Thiago Martins Santos</p>
+  <p style="font-style: italic; color: #fffefe;">Dono do Site</p>
+</div>
+</footer>
+
